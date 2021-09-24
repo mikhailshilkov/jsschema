@@ -527,23 +527,21 @@ func (s *Schema) Extract(m map[string]interface{}) error {
 		return errors.Wrap(err, "failed to extract 'items'")
 	}
 
-	if err = extractRegexp(&s.Pattern, m, "pattern"); err != nil {
-		return errors.Wrap(err, "failed to extract 'patterns'")
-	}
+	_ = extractRegexp(&s.Pattern, m, "pattern")
 
-	if extractInt(&s.MinLength, m, "minLength"); err != nil {
+	if err = extractInt(&s.MinLength, m, "minLength"); err != nil {
 		return errors.Wrap(err, "failed to extract 'minLength'")
 	}
 
-	if extractInt(&s.MaxLength, m, "maxLength"); err != nil {
+	if err = extractInt(&s.MaxLength, m, "maxLength"); err != nil {
 		return errors.Wrap(err, "failed to extract 'maxLength'")
 	}
 
-	if extractInt(&s.MinItems, m, "minItems"); err != nil {
+	if err = extractInt(&s.MinItems, m, "minItems"); err != nil {
 		return errors.Wrap(err, "failed to extract 'minItems'")
 	}
 
-	if extractInt(&s.MaxItems, m, "maxItems"); err != nil {
+	if err = extractInt(&s.MaxItems, m, "maxItems"); err != nil {
 		return errors.Wrap(err, "failed to extract 'maxItems'")
 	}
 
@@ -625,9 +623,7 @@ func (s *Schema) Extract(m map[string]interface{}) error {
 		}
 	}
 
-	if s.PatternProperties, err = extractRegexpToSchemaMap(m, "patternProperties"); err != nil {
-		return errors.Wrap(err, "failed to extract 'patternProperties'")
-	}
+	s.PatternProperties, _ = extractRegexpToSchemaMap(m, "patternProperties")
 
 	if err = s.AllOf.extractIfPresent(m, "allOf"); err != nil {
 		return errors.Wrap(err, "failed to extract 'allOf'")
